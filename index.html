@@ -1,0 +1,724 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Night Studio</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root{
+    --ground:#14110d;
+    --surface:#1d1812;
+    --surface-2:#241d15;
+    --ink:#ece3d4;
+    --ink-dim:#a99c88;
+    --ink-faint:#6e6455;
+    --accent:#c98a3e;
+    --accent-soft:#e3b579;
+    --accent-deep:#8b4f26;
+    --line:#372e22;
+    --line-soft:#2a2319;
+    --font-display:'Fraunces', 'Iowan Old Style', ui-serif, Georgia, serif;
+    --font-body:'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif;
+    --font-mono:'IBM Plex Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion:reduce){ html{scroll-behavior:auto;} }
+
+  body{
+    background:var(--ground);
+    color:var(--ink);
+    font-family:var(--font-body);
+    font-size:1.0625rem;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    position:relative;
+    overflow-x:hidden;
+  }
+
+  /* lamp-glow vignette, fixed atmosphere */
+  body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    z-index:0;
+    pointer-events:none;
+    background:
+      radial-gradient(60% 45% at 50% -6%, rgba(201,138,62,0.16), transparent 70%),
+      radial-gradient(90% 60% at 50% 110%, rgba(0,0,0,0.55), transparent 60%);
+  }
+
+  h1,h2,h3{font-family:var(--font-display); color:var(--ink); text-wrap:balance; margin:0;}
+  p{margin:0;}
+  a{color:inherit; text-decoration:none;}
+  ul{list-style:none; margin:0; padding:0;}
+  img,svg{max-width:100%; display:block;}
+
+  .wrap{
+    position:relative;
+    z-index:1;
+    max-width:1120px;
+    margin:0 auto;
+    padding:0 clamp(1.25rem, 4vw, 3rem);
+  }
+
+  .eyebrow{
+    font-family:var(--font-mono);
+    font-size:0.72rem;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--accent-soft);
+  }
+
+  /* ---------- nav ---------- */
+  nav.site-nav{
+    position:fixed;
+    top:0; left:0; right:0;
+    z-index:20;
+    background:rgba(20,17,13,0.82);
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line-soft);
+  }
+  .nav-inner{
+    max-width:1120px;
+    margin:0 auto;
+    padding:0 clamp(1.25rem, 4vw, 3rem);
+    height:60px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+  }
+  .nav-name{
+    font-family:var(--font-display);
+    font-size:1.05rem;
+    letter-spacing:0.01em;
+  }
+  .nav-links{
+    display:flex;
+    gap:clamp(1rem, 2.4vw, 2rem);
+    font-family:var(--font-mono);
+    font-size:0.72rem;
+    letter-spacing:0.11em;
+    text-transform:uppercase;
+  }
+  .nav-links a{
+    color:var(--ink-dim);
+    position:relative;
+    padding-bottom:4px;
+    transition:color .2s ease;
+  }
+  .nav-links a::after{
+    content:"";
+    position:absolute; left:0; right:100%; bottom:0;
+    height:1px;
+    background:var(--accent);
+    transition:right .25s ease;
+  }
+  .nav-links a:hover, .nav-links a.is-active{ color:var(--ink); }
+  .nav-links a:hover::after, .nav-links a.is-active::after{ right:0; }
+
+  /* ---------- hero ---------- */
+  header.hero{
+    position:relative;
+    padding:calc(60px + 8.5rem) 0 6rem;
+    min-height:92vh;
+    display:flex;
+    align-items:center;
+  }
+  .hero-inner{ max-width:760px; }
+  .hero-inner .eyebrow{ margin-bottom:1.4rem; opacity:0; animation:rise .7s ease forwards; }
+  .hero-title{
+    font-size:clamp(2.6rem, 6vw, 4.6rem);
+    font-weight:400;
+    line-height:1.06;
+    letter-spacing:-0.01em;
+    opacity:0; animation:rise .8s ease .1s forwards;
+  }
+  .hero-title em{ font-style:italic; font-weight:400; color:var(--accent-soft); }
+  .hero-sub{
+    margin-top:1.6rem;
+    max-width:52ch;
+    color:var(--ink-dim);
+    font-size:1.08rem;
+    opacity:0; animation:rise .8s ease .22s forwards;
+  }
+  .hero-meta{
+    margin-top:2.5rem;
+    display:flex;
+    gap:2rem;
+    flex-wrap:wrap;
+    font-family:var(--font-mono);
+    font-size:0.78rem;
+    color:var(--ink-faint);
+    opacity:0; animation:rise .8s ease .34s forwards;
+  }
+  .hero-meta strong{ color:var(--ink-dim); font-weight:500; }
+
+  @keyframes rise{
+    from{ opacity:0; transform:translateY(14px); }
+    to{ opacity:1; transform:translateY(0); }
+  }
+  @media (prefers-reduced-motion:reduce){
+    .hero-inner .eyebrow, .hero-title, .hero-sub, .hero-meta{
+      opacity:1; animation:none; transform:none;
+    }
+  }
+
+  .scroll-cue{
+    position:absolute;
+    left:clamp(1.25rem, 4vw, 3rem);
+    bottom:2.4rem;
+    display:flex;
+    align-items:center;
+    gap:.6rem;
+    font-family:var(--font-mono);
+    font-size:0.68rem;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--ink-faint);
+  }
+  .scroll-cue .line{
+    width:1px; height:34px;
+    background:linear-gradient(var(--accent), transparent);
+  }
+
+  /* ---------- sections ---------- */
+  section{
+    position:relative;
+    padding:6.5rem 0;
+    border-top:1px solid var(--line-soft);
+  }
+  .section-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    gap:2rem;
+    margin-bottom:3.2rem;
+    flex-wrap:wrap;
+  }
+  .section-head h2{
+    font-size:clamp(1.9rem, 3.4vw, 2.6rem);
+    font-weight:400;
+  }
+  .section-head .section-note{
+    max-width:34ch;
+    color:var(--ink-dim);
+    font-size:0.94rem;
+    padding-bottom:.3rem;
+  }
+  .section-index{
+    font-family:var(--font-mono);
+    font-size:0.72rem;
+    color:var(--ink-faint);
+    letter-spacing:0.08em;
+  }
+
+  /* ---------- art gallery ---------- */
+  .gallery{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(240px, 1fr));
+    gap:2.4rem 2rem;
+  }
+  .plate figure{
+    aspect-ratio:4/5;
+    border-radius:2px;
+    position:relative;
+    overflow:hidden;
+    border:1px solid var(--line);
+    box-shadow:0 18px 34px -22px rgba(0,0,0,0.6);
+  }
+  .plate figure::after{
+    content:"";
+    position:absolute; inset:0;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.5'/%3E%3C/svg%3E");
+    mix-blend-mode:overlay;
+    opacity:0.35;
+    pointer-events:none;
+  }
+  .plate figure{ transition:transform .5s cubic-bezier(.2,.7,.3,1); }
+  .plate:hover figure{ transform:translateY(-4px); }
+  .art-1{ background:radial-gradient(120% 100% at 20% 15%, #4a3520, #1a1410 65%); }
+  .art-2{ background:linear-gradient(160deg, #2b3339 0%, #171512 60%); }
+  .art-3{ background:radial-gradient(100% 90% at 80% 85%, #5c3a22, #14110d 70%); }
+  .art-4{ background:linear-gradient(135deg, #1c2530 0%, #241d15 55%, #14110d 100%); }
+  .art-5{ background:radial-gradient(110% 100% at 50% 0%, #3a2c1c, #14110d 68%); }
+  .art-6{ background:linear-gradient(200deg, #3d2e1c 0%, #1a1712 55%, #201a29 100%); }
+  .plate figcaption{
+    margin-top:1rem;
+    display:flex;
+    justify-content:space-between;
+    gap:1rem;
+    align-items:baseline;
+  }
+  .plate .plate-title{ font-size:0.98rem; color:var(--ink); }
+  .plate .plate-title .plate-no{
+    font-family:var(--font-mono);
+    color:var(--accent-soft);
+    font-size:0.72rem;
+    margin-right:.6rem;
+  }
+  .plate .plate-meta{
+    font-family:var(--font-mono);
+    font-size:0.72rem;
+    color:var(--ink-faint);
+    white-space:nowrap;
+  }
+
+  /* ---------- ledger (projects) ---------- */
+  .ledger-row{
+    display:grid;
+    grid-template-columns:2.6rem minmax(0,1fr) auto;
+    gap:1.5rem;
+    align-items:start;
+    padding:1.6rem 0;
+    border-top:1px solid var(--line-soft);
+    transition:background-color .2s ease;
+  }
+  .ledger-row:last-child{ border-bottom:1px solid var(--line-soft); }
+  .ledger-row:hover{ background:linear-gradient(90deg, var(--surface), transparent); }
+  .ledger-no{
+    font-family:var(--font-mono);
+    font-size:0.82rem;
+    color:var(--ink-faint);
+    padding-top:.2rem;
+  }
+  .ledger-row:hover .ledger-no{ color:var(--accent); }
+  .ledger-title{
+    font-family:var(--font-display);
+    font-size:1.28rem;
+    font-weight:400;
+    display:flex;
+    align-items:baseline;
+    gap:.6rem;
+  }
+  .ledger-title .arrow{
+    font-family:var(--font-mono);
+    color:var(--accent);
+    opacity:0;
+    transform:translateX(-4px);
+    transition:all .2s ease;
+  }
+  .ledger-row:hover .ledger-title .arrow{ opacity:1; transform:translateX(0); }
+  .ledger-desc{
+    margin-top:.5rem;
+    color:var(--ink-dim);
+    font-size:0.96rem;
+    max-width:56ch;
+  }
+  .ledger-tags{
+    margin-top:.9rem;
+    font-family:var(--font-mono);
+    font-size:0.72rem;
+    color:var(--ink-faint);
+    letter-spacing:0.03em;
+  }
+  .ledger-year{
+    font-family:var(--font-mono);
+    font-size:0.82rem;
+    color:var(--ink-faint);
+    text-align:right;
+    padding-top:.2rem;
+    white-space:nowrap;
+  }
+
+  /* ---------- portfolio cards ---------- */
+  .case-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));
+    gap:1.5rem;
+  }
+  .case-card{
+    background:var(--surface);
+    border:1px solid var(--line);
+    border-radius:3px;
+    padding:2rem;
+    display:flex;
+    flex-direction:column;
+    gap:1.1rem;
+    transition:border-color .25s ease, transform .25s ease;
+  }
+  .case-card:hover{ border-color:var(--accent-deep); transform:translateY(-3px); }
+  .case-meta{
+    font-family:var(--font-mono);
+    font-size:0.7rem;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--accent-soft);
+    display:flex;
+    gap:.7rem;
+    flex-wrap:wrap;
+  }
+  .case-meta span:not(:last-child)::after{ content:"·"; margin-left:.7rem; color:var(--ink-faint); }
+  .case-card h3{ font-size:1.4rem; font-weight:400; }
+  .case-card p{ color:var(--ink-dim); font-size:0.95rem; }
+  .case-link{
+    margin-top:auto;
+    font-family:var(--font-mono);
+    font-size:0.76rem;
+    letter-spacing:0.05em;
+    color:var(--ink);
+    display:inline-flex;
+    align-items:center;
+    gap:.4rem;
+  }
+  .case-link .arrow{ color:var(--accent); transition:transform .2s ease; }
+  .case-card:hover .case-link .arrow{ transform:translateX(3px); }
+
+  /* ---------- writings ---------- */
+  .write-row{
+    display:grid;
+    grid-template-columns:minmax(0,1fr) auto;
+    gap:1.5rem 2rem;
+    align-items:start;
+    padding:1.7rem 0;
+    border-top:1px solid var(--line-soft);
+  }
+  .write-row:last-child{ border-bottom:1px solid var(--line-soft); }
+  .write-title{
+    font-family:var(--font-display);
+    font-size:1.24rem;
+    font-weight:400;
+    transition:color .2s ease;
+  }
+  .write-row:hover .write-title{ color:var(--accent-soft); }
+  .write-dek{
+    margin-top:.5rem;
+    color:var(--ink-dim);
+    font-size:0.95rem;
+    max-width:58ch;
+  }
+  .write-meta{
+    font-family:var(--font-mono);
+    font-size:0.72rem;
+    color:var(--ink-faint);
+    text-align:right;
+    white-space:nowrap;
+    padding-top:.25rem;
+  }
+  .write-meta div + div{ margin-top:.3rem; }
+
+  /* ---------- footer ---------- */
+  footer{
+    padding:5rem 0 3.5rem;
+    border-top:1px solid var(--line-soft);
+  }
+  .footer-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    gap:2rem;
+    flex-wrap:wrap;
+  }
+  footer h2{
+    font-size:clamp(1.8rem, 4vw, 2.8rem);
+    font-weight:400;
+    max-width:14ch;
+  }
+  .footer-links{
+    display:flex;
+    flex-direction:column;
+    gap:.7rem;
+    font-family:var(--font-mono);
+    font-size:0.82rem;
+  }
+  .footer-links a{ color:var(--ink-dim); transition:color .2s ease; }
+  .footer-links a:hover{ color:var(--accent-soft); }
+  .footer-bottom{
+    margin-top:4rem;
+    padding-top:1.6rem;
+    border-top:1px solid var(--line-soft);
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:1rem;
+    font-family:var(--font-mono);
+    font-size:0.7rem;
+    color:var(--ink-faint);
+    letter-spacing:0.04em;
+  }
+
+  a:focus-visible, button:focus-visible{
+    outline:2px solid var(--accent);
+    outline-offset:3px;
+  }
+
+  @media (max-width:640px){
+    .ledger-row{ grid-template-columns:2rem 1fr; }
+    .ledger-year{ grid-column:2; text-align:left; padding-top:0; }
+    .write-row{ grid-template-columns:1fr; }
+    .write-meta{ text-align:left; }
+    .nav-links{ display:none; }
+  }
+</style>
+
+</head>
+<body>
+<!--
+  HOW TO EDIT THIS SITE
+  ----------------------
+  - Search for "Bora Guzel", "hello@boraguzel.com", and the Instagram/GitHub "#"
+    links in the footer and nav, and update them.
+  - The Art section (id="art") uses CSS gradient placeholders instead of real
+    images. To swap in a real photo, replace a <figure class="art-1"></figure>
+    with <figure><img src="your-photo.jpg" alt="..."></figure> and add
+    figure img{width:100%;height:100%;object-fit:cover;} to the stylesheet.
+  - Project, Portfolio, and Writings entries are placeholder copy — replace the
+    titles, descriptions, tags, and links (search for href="#") with your own.
+  - Writings currently link out to https://boraguzel.wordpress.com/. Point them
+    at individual post URLs once you have them, or move the essays here.
+  - Colors and fonts are defined once at the top of the <style> block as CSS
+    custom properties (--ground, --accent, etc.) if you want to retune the
+    palette.
+-->
+
+<nav class="site-nav">
+  <div class="nav-inner">
+    <div class="nav-name">Bora Guzel</div>
+    <div class="nav-links">
+      <a href="#art">Art</a>
+      <a href="#projects">Projects</a>
+      <a href="#portfolio">Portfolio</a>
+      <a href="#writings">Writings</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap hero-inner">
+    <p class="eyebrow">Bora Guzel — art, software, words</p>
+    <h1 class="hero-title">I build, paint, and write.<br><em>Usually in that order.</em></h1>
+    <p class="hero-sub">A working record of what I've made — paintings, small tools, longer projects, and the essays that come out of all of it. Updated as things get made, not when they're finished.</p>
+    <div class="hero-meta">
+      <span><strong>Based in</strong> — Vancouver, BC</span>
+      <span><strong>Currently</strong> — building &amp; sketching</span>
+      <span><strong>Say hi</strong> — hello@boraguzel.com</span>
+    </div>
+  </div>
+  <div class="scroll-cue"><span class="line"></span>Scroll</div>
+</header>
+
+<main>
+  <section id="art">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Art</h2>
+        <p class="section-note">Studies and finished pieces, mostly oil and ink. Replace these plates with photos of your own work.</p>
+        <span class="section-index">06 plates</span>
+      </div>
+      <div class="gallery">
+        <div class="plate">
+          <figure class="art-1"></figure>
+          <figcaption>
+            <span class="plate-title"><span class="plate-no">Pl. 01</span>Ash and Ember</span>
+            <span class="plate-meta">oil / panel, 2025</span>
+          </figcaption>
+        </div>
+        <div class="plate">
+          <figure class="art-2"></figure>
+          <figcaption>
+            <span class="plate-title"><span class="plate-no">Pl. 02</span>Low Tide</span>
+            <span class="plate-meta">ink wash, 2024</span>
+          </figcaption>
+        </div>
+        <div class="plate">
+          <figure class="art-3"></figure>
+          <figcaption>
+            <span class="plate-title"><span class="plate-no">Pl. 03</span>Interior, Lamp Light</span>
+            <span class="plate-meta">gouache, 2025</span>
+          </figcaption>
+        </div>
+        <div class="plate">
+          <figure class="art-4"></figure>
+          <figcaption>
+            <span class="plate-title"><span class="plate-no">Pl. 04</span>Untitled (Blue Hour)</span>
+            <span class="plate-meta">oil / canvas, 2024</span>
+          </figcaption>
+        </div>
+        <div class="plate">
+          <figure class="art-5"></figure>
+          <figcaption>
+            <span class="plate-title"><span class="plate-no">Pl. 05</span>Signal</span>
+            <span class="plate-meta">charcoal, 2023</span>
+          </figcaption>
+        </div>
+        <div class="plate">
+          <figure class="art-6"></figure>
+          <figcaption>
+            <span class="plate-title"><span class="plate-no">Pl. 06</span>Night Studio</span>
+            <span class="plate-meta">mixed media, 2025</span>
+          </figcaption>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Projects</h2>
+        <p class="section-note">Things I've built for myself, mostly finished on weekends.</p>
+        <span class="section-index">04 entries</span>
+      </div>
+      <div class="ledger">
+        <div class="ledger-row">
+          <span class="ledger-no">01</span>
+          <div>
+            <div class="ledger-title">Night Studio<span class="arrow">→</span></div>
+            <p class="ledger-desc">A desktop app for cataloguing paintings by palette, medium, and mood instead of folders.</p>
+            <div class="ledger-tags">Swift · SQLite</div>
+          </div>
+          <span class="ledger-year">2025</span>
+        </div>
+        <div class="ledger-row">
+          <span class="ledger-no">02</span>
+          <div>
+            <div class="ledger-title">Field Notes<span class="arrow">→</span></div>
+            <p class="ledger-desc">A note-taking tool built around voice memos, transcribed on-device while I sketch.</p>
+            <div class="ledger-tags">Python · Whisper</div>
+          </div>
+          <span class="ledger-year">2024</span>
+        </div>
+        <div class="ledger-row">
+          <span class="ledger-no">03</span>
+          <div>
+            <div class="ledger-title">Low Tide<span class="arrow">→</span></div>
+            <p class="ledger-desc">A generative print series that turns tidal data into plotter line drawings.</p>
+            <div class="ledger-tags">Processing · Plotter</div>
+          </div>
+          <span class="ledger-year">2024</span>
+        </div>
+        <div class="ledger-row">
+          <span class="ledger-no">04</span>
+          <div>
+            <div class="ledger-title">Signal<span class="arrow">→</span></div>
+            <p class="ledger-desc">A small open-source CLI for tracking personal writing streaks, no accounts, no cloud.</p>
+            <div class="ledger-tags">Rust</div>
+          </div>
+          <span class="ledger-year">2023</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="portfolio">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Portfolio</h2>
+        <p class="section-note">Selected client and commissioned work. Swap in your real case studies and links.</p>
+        <span class="section-index">03 selected</span>
+      </div>
+      <div class="case-grid">
+        <div class="case-card">
+          <div class="case-meta"><span>Product design</span><span>Freelance client</span><span>2025</span></div>
+          <h3>Wayfinder</h3>
+          <p>Redesigned the onboarding flow for a small travel app, cutting first-session drop-off and giving the product a visual identity it hadn't had before.</p>
+          <a class="case-link" href="#">View case study <span class="arrow">→</span></a>
+        </div>
+        <div class="case-card">
+          <div class="case-meta"><span>Brand identity</span><span>Self-initiated</span><span>2024</span></div>
+          <h3>Atelier</h3>
+          <p>A type-led identity system for an independent art supply shop — mark, packaging, and a small print catalog.</p>
+          <a class="case-link" href="#">View case study <span class="arrow">→</span></a>
+        </div>
+        <div class="case-card">
+          <div class="case-meta"><span>Editorial design</span><span>Independent zine</span><span>2023</span></div>
+          <h3>Marginal</h3>
+          <p>Art direction and layout for three issues of a small-run print zine on craft and slowness.</p>
+          <a class="case-link" href="#">View case study <span class="arrow">→</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="writings">
+    <div class="wrap">
+      <div class="section-head">
+        <h2>Writings</h2>
+        <p class="section-note">Essays and longer notes. Link these through to your existing WordPress posts, or move them here.</p>
+        <span class="section-index">04 pieces</span>
+      </div>
+      <div class="write-list">
+        <a class="write-row" href="https://boraguzel.wordpress.com/" target="_blank" rel="noopener">
+          <div>
+            <div class="write-title">On Finishing Things</div>
+            <p class="write-dek">Why most of what I make stays "in progress" — and the one habit that's changed that this year.</p>
+          </div>
+          <div class="write-meta"><div>Aug 2026</div><div>6 min</div></div>
+        </a>
+        <a class="write-row" href="https://boraguzel.wordpress.com/" target="_blank" rel="noopener">
+          <div>
+            <div class="write-title">Notes from the Night Studio</div>
+            <p class="write-dek">A short log of what late, unglamorous studio hours actually look like.</p>
+          </div>
+          <div class="write-meta"><div>Mar 2026</div><div>4 min</div></div>
+        </a>
+        <a class="write-row" href="https://boraguzel.wordpress.com/" target="_blank" rel="noopener">
+          <div>
+            <div class="write-title">Why I Still Sketch on Paper</div>
+            <p class="write-dek">On keeping one analog habit in an otherwise fully digital practice.</p>
+          </div>
+          <div class="write-meta"><div>Dec 2025</div><div>5 min</div></div>
+        </a>
+        <a class="write-row" href="https://boraguzel.wordpress.com/" target="_blank" rel="noopener">
+          <div>
+            <div class="write-title">A Slow Year</div>
+            <p class="write-dek">A year-end review of what got made, what got shelved, and what's next.</p>
+          </div>
+          <div class="write-meta"><div>Jan 2025</div><div>8 min</div></div>
+        </a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="footer-top">
+      <h2>Let's talk about a project, a piece, or an idea.</h2>
+      <div class="footer-links">
+        <a href="mailto:hello@boraguzel.com">hello@boraguzel.com</a>
+        <a href="https://boraguzel.wordpress.com/" target="_blank" rel="noopener">Writing archive ↗</a>
+        <a href="#">Instagram ↗</a>
+        <a href="#">GitHub ↗</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Bora Guzel</span>
+      <span>Built as a personal site, edited by hand</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  (function(){
+    var links = document.querySelectorAll('.nav-links a');
+    var sections = Array.prototype.map.call(links, function(a){
+      return document.querySelector(a.getAttribute('href'));
+    }).filter(Boolean);
+
+    if(!('IntersectionObserver' in window) || sections.length === 0) return;
+
+    var byId = {};
+    links.forEach(function(a){ byId[a.getAttribute('href').slice(1)] = a; });
+
+    var observer = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        var link = byId[entry.target.id];
+        if(!link) return;
+        if(entry.isIntersecting){
+          links.forEach(function(l){ l.classList.remove('is-active'); });
+          link.classList.add('is-active');
+        }
+      });
+    }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
+
+    sections.forEach(function(s){ observer.observe(s); });
+  })();
+</script>
+
+</body>
+</html>
