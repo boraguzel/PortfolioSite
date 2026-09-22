@@ -132,15 +132,15 @@
   /* ---------- hero ---------- */
   header.hero{
     position:relative;
-    padding:calc(60px + 8.5rem) 0 6rem;
-    min-height:92vh;
+    padding:calc(60px + 4rem) 0 5rem;
+    min-height:68vh;
     display:flex;
     align-items:center;
   }
-  .hero-inner{ max-width:760px; }
+  .hero-inner{ max-width:1120px; }
   .hero-inner .eyebrow{ margin-bottom:1.4rem; opacity:0; animation:rise .7s ease forwards; }
   .hero-title{
-    font-size:clamp(2.6rem, 6vw, 4.6rem);
+    font-size:clamp(2.6rem, 4.5vw, 4rem);
     font-weight:400;
     line-height:1.06;
     letter-spacing:-0.01em;
@@ -165,100 +165,6 @@
     opacity:0; animation:rise .8s ease .34s forwards;
   }
   .hero-meta strong{ color:var(--ink-dim); font-weight:500; }
-
-  /* ---------- studio showcase ---------- */
-  .studio-scene{
-    position:relative;
-    margin-top:4rem;
-    min-height:clamp(330px, 46vw, 500px);
-    border:1px solid var(--line);
-    overflow:hidden;
-    background:
-      linear-gradient(90deg, transparent 49.85%, rgba(255,255,255,.025) 50%, transparent 50.15%),
-      linear-gradient(#251e16 0 68%, #17120d 68% 100%);
-    box-shadow:0 35px 70px -42px rgba(0,0,0,.9);
-  }
-  .studio-scene::before{
-    content:"";
-    position:absolute;
-    inset:0;
-    pointer-events:none;
-    background:radial-gradient(circle at 44% 14%, rgba(227,181,121,.18), transparent 38%);
-  }
-  .studio-object{
-    position:absolute;
-    display:block;
-    transition:transform .25s ease, filter .25s ease;
-  }
-  .studio-object:hover,
-  .studio-object:focus-visible{ transform:translateY(-6px); filter:brightness(1.08); }
-  .studio-object img{ width:100%; height:100%; object-fit:cover; }
-  .studio-label{
-    position:absolute;
-    left:50%;
-    bottom:-2.35rem;
-    transform:translateX(-50%);
-    width:max-content;
-    max-width:15rem;
-    padding:.42rem .58rem;
-    border:1px solid var(--line);
-    background:rgba(20,17,13,.94);
-    color:var(--ink);
-    font-family:var(--font-mono);
-    font-size:.67rem;
-    letter-spacing:.08em;
-    text-transform:uppercase;
-    opacity:0;
-    transition:opacity .2s ease, bottom .2s ease;
-  }
-  .studio-object:hover .studio-label,
-  .studio-object:focus-visible .studio-label{ opacity:1; bottom:-1.9rem; }
-  .object-painting{
-    left:7%; top:10%; width:25%; height:54%;
-    padding:9px;
-    background:#0a0806;
-    border:8px solid #553820;
-    box-shadow:0 14px 28px rgba(0,0,0,.5);
-  }
-  .object-helmet{
-    right:8%; bottom:10%; width:29%; height:44%;
-    border-radius:50% 45% 22% 28%;
-    overflow:hidden;
-    box-shadow:0 18px 28px rgba(0,0,0,.55);
-  }
-  .object-notebook{
-    left:39%; bottom:7%; width:24%; height:27%;
-    padding:1rem 1rem .8rem 1.4rem;
-    background:#d8cfbd;
-    color:#332a20;
-    border-radius:2px 7px 7px 2px;
-    transform:rotate(-4deg);
-    box-shadow:7px 12px 24px rgba(0,0,0,.48);
-  }
-  .object-notebook:hover,
-  .object-notebook:focus-visible{ transform:rotate(-4deg) translateY(-6px); }
-  .notebook-kicker{ font:500 .62rem/1.4 var(--font-mono); letter-spacing:.12em; text-transform:uppercase; }
-  .notebook-title{ margin-top:.45rem; font:italic 1.15rem/1.12 var(--font-display); }
-  .object-drawing{
-    right:33%; top:12%; width:24%; height:29%;
-    padding:5px;
-    background:#e8e0d0;
-    border:1px solid #b8ab96;
-    transform:rotate(3deg);
-    box-shadow:5px 10px 22px rgba(0,0,0,.45);
-  }
-  .object-drawing:hover,
-  .object-drawing:focus-visible{ transform:rotate(3deg) translateY(-6px); }
-  .studio-hint{
-    position:absolute;
-    left:1rem;
-    bottom:.8rem;
-    font-family:var(--font-mono);
-    font-size:.65rem;
-    color:var(--ink-faint);
-    letter-spacing:.08em;
-    text-transform:uppercase;
-  }
 
   @keyframes rise{
     from{ opacity:0; transform:translateY(14px); }
@@ -558,11 +464,7 @@
     .write-row{ grid-template-columns:1fr; }
     .write-meta{ text-align:left; }
     .nav-links{ display:none; }
-    .studio-scene{ min-height:420px; }
-    .object-painting{ left:7%; top:8%; width:42%; height:42%; }
-    .object-drawing{ right:6%; top:10%; width:37%; height:25%; }
-    .object-notebook{ left:8%; bottom:11%; width:40%; height:22%; }
-    .object-helmet{ right:6%; bottom:9%; width:42%; height:34%; }
+    header.hero{ min-height:72vh; padding:calc(60px + 3rem) 0 5rem; }
   }
 </style>
 </head>
@@ -585,32 +487,12 @@
 <header class="hero">
   <div class="wrap hero-inner">
     <p class="eyebrow">The studio of Bora Guzel</p>
-    <h1 class="hero-title">Everything here began with something<br><em>I wanted to understand.</em></h1>
-    <p class="hero-sub">Paintings, words, geometry, and engineering. Select an object in the studio to see where the question led.</p>
+    <h1 class="hero-title">Everything here began with something <em>I wanted to understand.</em></h1>
+    <p class="hero-sub">Paintings, words, geometry, and engineering.</p>
     <div class="hero-meta">
       <span><strong>Based in</strong>: Vancouver, BC</span>
       <span><strong>Currently</strong>: painting &amp; building</span>
       <span><strong>Say hi</strong>: admin@boraguzel.com</span>
-    </div>
-    <div class="studio-scene" aria-label="Interactive studio showcase">
-      <a class="studio-object object-painting" href="paintings/respect-is-a-scam/">
-        <img src="assets/images/image-02-4fda0a03d9.jpg" alt="Respect Is a Scam painting">
-        <span class="studio-label">Enter the painting collection</span>
-      </a>
-      <a class="studio-object object-drawing" href="#projects">
-        <img src="assets/images/image-17-34b795f212.jpg" alt="CFD analysis print pinned to the studio wall">
-        <span class="studio-label">Open the engineering archive</span>
-      </a>
-      <a class="studio-object object-notebook" href="#writings">
-        <span class="notebook-kicker">Field notes</span>
-        <span class="notebook-title">Machines, movement, and the things we ask of them.</span>
-        <span class="studio-label">Read the writings</span>
-      </a>
-      <a class="studio-object object-helmet" href="#portfolio">
-        <img src="assets/images/image-12-5ae1a78f13.jpg" alt="Aerodynamic racing helmet concept">
-        <span class="studio-label">Inspect the CAD portfolio</span>
-      </a>
-      <span class="studio-hint">Select an object</span>
     </div>
   </div>
   <div class="scroll-cue"><span class="line"></span>Scroll</div>
