@@ -1,0 +1,37 @@
+:root{
+  --ground:#14110d;--ink:#ece3d4;--ink-dim:#b3a691;--ink-faint:#827563;
+  --accent:#c98a3e;--accent-soft:#e3b579;--line:#372e22;
+  --display:'Fraunces','Iowan Old Style',Georgia,serif;
+  --body:'IBM Plex Sans',system-ui,sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,monospace;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:7rem}
+body{margin:0;background:var(--ground);color:var(--ink);font:1.0625rem/1.75 var(--body);-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(60% 45% at 50% -6%,rgba(201,138,62,.13),transparent 70%)}
+a{color:inherit;text-decoration:none}
+a:hover{color:var(--accent-soft)}
+a:focus-visible{outline:2px solid var(--accent-soft);outline-offset:4px}
+.wrap{position:relative;width:min(1100px,calc(100% - 2.5rem));margin:auto}
+.site-nav{display:flex;align-items:center;justify-content:space-between;min-height:64px;border-bottom:1px solid var(--line);font: .75rem/1.4 var(--mono);letter-spacing:.1em;text-transform:uppercase}
+.site-nav a{color:var(--ink-dim)}
+.masthead{padding:clamp(4rem,8vw,7.5rem) 0 3rem;max-width:900px}
+.eyebrow{margin:0 0 1.2rem;color:var(--accent-soft);font:.75rem/1.5 var(--mono);letter-spacing:.12em;text-transform:uppercase}
+h1{margin:0 0 1.2rem;font:400 clamp(2.8rem,7vw,5.5rem)/1.05 var(--display);letter-spacing:-.02em}
+.subtitle{margin:0 0 1.4rem;font:italic clamp(1.2rem,2vw,1.5rem)/1.4 var(--display);color:var(--accent-soft)}
+.intro{max-width:56ch;color:var(--ink-dim);margin:0 0 2rem}
+.meta{font:.74rem/1.6 var(--mono);letter-spacing:.04em;color:var(--ink-faint)}
+.language-nav{position:sticky;top:0;z-index:5;display:flex;gap:2rem;padding:1rem 0;background:rgba(20,17,13,.96);border-top:1px solid var(--line);border-bottom:1px solid var(--line);font:.79rem/1.5 var(--mono)}
+.language-nav a{color:var(--ink-dim)}
+.language-nav a:hover{color:var(--accent-soft)}
+.article{max-width:72ch;padding:clamp(3rem,6vw,5.5rem) 0 4rem}
+.article + .article{border-top:1px solid var(--line)}
+.article h2{margin:0 0 2.2rem;font:400 clamp(2rem,4vw,3rem)/1.15 var(--display)}
+.article p{margin:0 0 1.7rem;overflow-wrap:break-word}
+.article p:first-of-type::first-letter{float:left;margin:.05em .12em 0 0;font:400 3.2em/.78 var(--display);color:var(--accent-soft)}
+.closing{font:italic 1.55rem/1.45 var(--display);color:var(--accent-soft)}
+.signature{color:var(--ink-faint);font:.75rem/1.5 var(--mono);letter-spacing:.1em;text-transform:uppercase}
+.footer{padding:1.8rem 0 3rem;border-top:1px solid var(--line);color:var(--ink-faint);font:.75rem/1.6 var(--mono)}
+.footer a{text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:3px}
+@media(max-width:600px){.language-nav{gap:1.1rem}.article{padding:3rem 0}.masthead{padding-top:3.5rem}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
