@@ -29,6 +29,9 @@ h1{margin:0 0 1.2rem;font:400 clamp(2.8rem,7vw,5.5rem)/1.05 var(--display);lette
 .article h2{margin:0 0 2.2rem;font:400 clamp(2rem,4vw,3rem)/1.15 var(--display)}
 .article p{margin:0 0 1.7rem;overflow-wrap:break-word}
 .article p:first-of-type::first-letter{float:left;margin:.05em .12em 0 0;font:400 3.2em/.78 var(--display);color:var(--accent-soft)}
+.article hr{width:4rem;margin:4rem auto;border:0;border-top:1px solid var(--accent);opacity:.65}
+.article strong{font-weight:500;color:var(--ink)}
+.article em{font-family:var(--display);font-size:1.08em;color:var(--accent-soft)}
 .closing{font:italic 1.55rem/1.45 var(--display);color:var(--accent-soft)}
 .signature{color:var(--ink-faint);font:.75rem/1.5 var(--mono);letter-spacing:.1em;text-transform:uppercase}
 .footer{padding:1.8rem 0 3rem;border-top:1px solid var(--line);color:var(--ink-faint);font:.75rem/1.6 var(--mono)}
