@@ -382,6 +382,10 @@
   .case-card:hover .case-link .arrow{ transform:translateX(3px); }
 
   /* ---------- featured engineering case ---------- */
+  .engineering-list{
+    display:grid;
+    gap:1.35rem;
+  }
   .engineering-feature{
     display:grid;
     grid-template-columns:minmax(0,1.18fr) minmax(300px,.82fr);
@@ -406,7 +410,7 @@
     border-right:1px solid var(--line);
   }
   .engineering-preview::before{
-    content:"PLAN 01";
+    content:attr(data-label);
     position:absolute;
     top:1.25rem;
     left:1.25rem;
@@ -743,22 +747,41 @@
         <h2>Engineering</h2>
         <p class="section-note">The decisions, calculations, and lessons behind selected engineering work.</p>
       </div>
-      <a class="engineering-feature" href="engineering/competitive-racing-circuit/">
-        <div class="engineering-preview">
-          <img src="assets/images/engineering/adanaring-track-plan.png" alt="AutoCAD plan of the 17-turn AdanaRing racing circuit">
-        </div>
-        <div class="engineering-copy">
-          <div class="case-meta"><span>Senior design</span><span>Civil engineering</span><span>2019</span></div>
-          <h3>Planning and Design of a Competitive Racing Circuit</h3>
-          <p>A 5,037 m circuit concept developed from the sporting brief through speed, crossfall, runoff, and pavement decisions.</p>
-          <div class="engineering-stats">
-            <span><strong>17</strong> turns</span>
-            <span><strong>3</strong> sectors</span>
-            <span><strong>900 m</strong> main straight</span>
+      <div class="engineering-list">
+        <a class="engineering-feature" href="engineering/competitive-racing-circuit/">
+          <div class="engineering-preview" data-label="PLAN 01">
+            <img src="assets/images/engineering/adanaring-track-plan.png" alt="AutoCAD plan of the 17-turn AdanaRing racing circuit">
           </div>
-          <span class="case-link">Follow the decision path <span class="arrow">→</span></span>
-        </div>
-      </a>
+          <div class="engineering-copy">
+            <div class="case-meta"><span>Senior design</span><span>Civil engineering</span><span>2019</span></div>
+            <h3>Planning and Design of a Competitive Racing Circuit</h3>
+            <p>A 5,037 m circuit concept developed from the sporting brief through speed, crossfall, runoff, and pavement decisions.</p>
+            <div class="engineering-stats">
+              <span><strong>17</strong> turns</span>
+              <span><strong>3</strong> sectors</span>
+              <span><strong>900 m</strong> main straight</span>
+            </div>
+            <span class="case-link">Follow the decision path <span class="arrow">→</span></span>
+          </div>
+        </a>
+
+        <a class="engineering-feature" href="engineering/underground-car-park-cfd/">
+          <div class="engineering-preview" data-label="CFD 02">
+            <img src="assets/images/engineering/carpark/velocity-b3.webp" alt="ANSYS Fluent velocity contour at human height on Level B3 of an underground car park">
+          </div>
+          <div class="engineering-copy">
+            <div class="case-meta"><span>CFD engineering</span><span>Smoke control</span><span>2021</span></div>
+            <h3>Underground Car Park Ventilation and Smoke Control</h3>
+            <p>A three-level CFD study that traced a ventilation failure from colourful local flow paths back to an uneven supply-and-extract strategy.</p>
+            <div class="engineering-stats">
+              <span><strong>59</strong> jet fans</span>
+              <span><strong>22.57M</strong> elements</span>
+              <span><strong>3</strong> fire cases</span>
+            </div>
+            <span class="case-link">Follow the decision path <span class="arrow">→</span></span>
+          </div>
+        </a>
+      </div>
     </div>
   </section>
 </main>

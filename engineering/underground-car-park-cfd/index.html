@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="A CFD engineering case study by Bora Guzel examining ventilation, smoke extraction, jet-fan performance, and fire scenarios in a three-level underground car park.">
+  <title>Underground Car Park CFD | Bora Guzel</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="../../assets/css/engineering.css">
+</head>
+<body>
+  <nav class="site-nav" aria-label="Site navigation">
+    <div class="wrap nav-inner">
+      <a class="brand" href="../../"><img src="../../assets/images/image-01-3e7a210499.png" alt=""><span>Bora Guzel</span></a>
+      <a class="nav-back" href="../../#projects">← Engineering archive</a>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <p class="eyebrow">Engineering case study · 2021</p>
+        <h1>Underground Car Park <em>Ventilation &amp; Smoke Control</em></h1>
+        <p class="hero-lead">A CFD study that separated visible air movement from the floor-level performance the system actually delivered.</p>
+        <div class="hero-meta">
+          <span><strong>Role</strong>: CFD Engineer</span>
+          <span><strong>Tools</strong>: ANSYS Fluent</span>
+          <span><strong>Model</strong>: 3 connected basement levels</span>
+        </div>
+        <p class="scope-note">The 2021 analysis is presented as reported and was not rerun for this portfolio edition. The original design criteria require confirmation before current code approval or construction use.</p>
+      </div>
+
+      <figure class="track-frame cfd-frame">
+        <img src="../../assets/images/engineering/carpark/velocity-b3.webp" alt="ANSYS Fluent velocity contour at human height on Level B3 of the underground car park">
+        <figcaption>Human-level velocity field · Level B3 · 0–1 m/s scale</figcaption>
+      </figure>
+    </div>
+  </header>
+
+  <main>
+    <div class="wrap stats" aria-label="Project summary">
+      <div class="stat"><strong>3</strong><span>Basement levels</span></div>
+      <div class="stat"><strong>1,135</strong><span>Vehicle capacity</span></div>
+      <div class="stat"><strong>59</strong><span>Jet fans</span></div>
+      <div class="stat"><strong>22.57M</strong><span>Mesh elements</span></div>
+      <div class="stat"><strong>4 MW</strong><span>Vehicle fire</span></div>
+      <div class="stat"><strong>180 s</strong><span>Control activation</span></div>
+    </div>
+
+    <section class="case-section" id="brief">
+      <div class="wrap section-grid">
+        <div class="section-kicker">01 <span>The brief</span></div>
+        <div class="section-copy">
+          <h2>The question was not whether air moved. It was whether it reached the right floor.</h2>
+          <p class="section-intro">The study examined a three-level underground car park under routine ventilation and fire conditions. The model had to distinguish local circulation created by jet fans from the net supply and extract flow that renews each floor.</p>
+
+          <div class="brief-grid">
+            <article class="brief-card">
+              <h3>Starting question</h3>
+              <p>Could the completed fan and shaft arrangement ventilate every floor and preserve usable escape conditions during the selected fires?</p>
+            </article>
+            <article class="brief-card">
+              <h3>Model scope</h3>
+              <p>Levels B2, B3, and B4; ramps, cores, openings, six main shaft boundaries, 59 induction fans, and three fire scenarios.</p>
+            </article>
+            <article class="brief-card">
+              <h3>Performance checks</h3>
+              <p>Six air changes per hour in normal operation, ten in fire mode, occupied-height velocity, smoke movement, and escape-path exposure.</p>
+            </article>
+            <article class="brief-card">
+              <h3>My role</h3>
+              <p>Prepare the CFD model, define the numerical method and boundary conditions, interpret the results, and turn them into design recommendations.</p>
+            </article>
+          </div>
+
+          <figure class="wide-figure">
+            <img src="../../assets/images/engineering/carpark/ventilation-plans.webp" loading="lazy" alt="Ventilation layouts for underground car park Levels B4, B3, and B2">
+            <figcaption>Mechanical ventilation plans · B4, B3, and B2</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="case-section" id="path">
+      <div class="wrap section-grid">
+        <div class="section-kicker">02 <span>Decision path</span></div>
+        <div class="section-copy">
+          <h2>Six decisions turned plans into an engineering diagnosis.</h2>
+          <p class="section-intro">The useful result was not a colourful contour. It was the chain of checks that connected architecture, fan duties, numerical physics, and evacuation risk.</p>
+
+          <ol class="decision-path">
+            <li>
+              <div>
+                <h3>Turn the building into a fluid domain</h3>
+                <p class="decision-question">What geometry controls the air?</p>
+                <p class="decision-text">The architectural and mechanical plans were inverted into connected air volumes. Ramps, cores, columns, shafts, vents, fan locations, and escape routes were retained where they could alter the flow.</p>
+                <p class="decision-output">Output · Three connected floor domains representing B2, B3, and B4.</p>
+              </div>
+            </li>
+            <li>
+              <div>
+                <h3>Define success before looking at contours</h3>
+                <p class="decision-question">What has to be true?</p>
+                <p class="decision-text">Average air renewal and local conditions answer different questions. The model therefore combined floor-level air-change targets with velocity and species checks along occupied and escape-path elevations.</p>
+                <p class="decision-output">Output · 6 ACH in normal operation, 10 ACH in fire mode, plus occupied-height flow and tenability review.</p>
+              </div>
+            </li>
+            <li>
+              <div>
+                <h3>Put resolution where gradients matter</h3>
+                <p class="decision-question">Where can a coarse mesh hide the answer?</p>
+                <p class="decision-text">Local refinement was concentrated around inlets, jet-fan outlets, fires, openings, and geometry changes. Less sensitive regions used larger elements to keep the three-floor model computationally practical.</p>
+                <p class="decision-output">Output · 4.19 million nodes and 22.57 million elements, with reported element sizes from 50 to 500 mm.</p>
+              </div>
+            </li>
+            <li>
+              <div>
+                <h3>Separate routine flow from fire physics</h3>
+                <p class="decision-question">Which physics does each operating mode require?</p>
+                <p class="decision-text">Normal ventilation was solved as a steady-state airflow problem. The fire cases were transient and added gravity, temperature-dependent density, energy, and species transport to represent buoyant smoke and combustion products.</p>
+                <p class="decision-output">Output · A standard k–ε ventilation model and transient fire models with heat and species transport.</p>
+              </div>
+            </li>
+            <li>
+              <div>
+                <h3>Compare circulation with mass balance</h3>
+                <p class="decision-question">Are the fans solving the same problem as the shafts?</p>
+                <p class="decision-text">Velocity plots showed that the jet fans formed useful local paths. The floor flow balance revealed a different system-level result: B2 and B3 received excess air while B4 remained below target.</p>
+                <p class="decision-output">Output · The governing failure moved upstream from individual jet fans to floor-by-floor supply and extraction.</p>
+              </div>
+            </li>
+            <li>
+              <div>
+                <h3>Test the system where people depend on it</h3>
+                <p class="decision-question">Does the control sequence preserve escape time?</p>
+                <p class="decision-text">Three 4 MW vehicle-fire cases were positioned to challenge long escape paths and the principal fire-fan influence. Conditions were compared before and after the reported 180-second control activation.</p>
+                <p class="decision-output">Output · A time-based review of smoke control, exposure, evacuation assumptions, and recovery after fan activation.</p>
+              </div>
+            </li>
+          </ol>
+
+          <figure class="wide-figure wide-figure--dark">
+            <img src="../../assets/images/engineering/carpark/mesh-overview.webp" loading="lazy" alt="CFD meshes for the three underground car park levels and a close view of local mesh refinement">
+            <figcaption>Three floor meshes and local refinement around flow-critical geometry</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="case-section" id="results">
+      <div class="wrap section-grid">
+        <div class="section-kicker">03 <span>Air balance</span></div>
+        <div class="section-copy">
+          <h2>Two floors had excess airflow. B4 missed both targets.</h2>
+          <p class="section-intro">The same imbalance appeared in both operating modes. This made the diagnosis stronger: the issue was not a single fan setting but the way the shared supply and extract system distributed capacity across the building.</p>
+
+          <div class="result-grid">
+            <article class="result-panel">
+              <p class="eyebrow">Normal ventilation · target 6 ACH</p>
+              <table class="result-table">
+                <thead><tr><th>Level</th><th>Calculated</th><th>Result</th></tr></thead>
+                <tbody>
+                  <tr><td>B2</td><td>16.75 ACH</td><td><span class="status status--pass">Pass</span></td></tr>
+                  <tr><td>B3</td><td>11.76 ACH</td><td><span class="status status--pass">Pass</span></td></tr>
+                  <tr><td>B4</td><td>3.98 ACH</td><td><span class="status status--fail">Fail</span></td></tr>
+                </tbody>
+              </table>
+            </article>
+            <article class="result-panel">
+              <p class="eyebrow">Fire operation · target 10 ACH</p>
+              <table class="result-table">
+                <thead><tr><th>Level</th><th>Calculated</th><th>Result</th></tr></thead>
+                <tbody>
+                  <tr><td>B2</td><td>38.75 ACH</td><td><span class="status status--pass">Pass</span></td></tr>
+                  <tr><td>B3</td><td>27.39 ACH</td><td><span class="status status--pass">Pass</span></td></tr>
+                  <tr><td>B4</td><td>9.12 ACH</td><td><span class="status status--fail">Fail</span></td></tr>
+                </tbody>
+              </table>
+            </article>
+          </div>
+
+          <div class="diagnosis-callout">
+            <span>Governing insight</span>
+            <strong>Local velocity can look healthy while the floor still receives too little replacement air.</strong>
+            <p>The jet fans redistribute momentum inside a level. They cannot correct a supply-and-extract system that sends too much capacity to B2 and B3 and too little to B4.</p>
+          </div>
+
+          <figure class="wide-figure wide-figure--dark">
+            <img src="../../assets/images/engineering/carpark/human-level-velocity.webp" loading="lazy" alt="Human-height velocity contours on Levels B4, B3, and B2 shown on a common zero to one metre per second scale">
+            <figcaption>Human-height comparison · common 0–1 m/s scale · B4, B3, and B2</figcaption>
+          </figure>
+
+          <p class="source-note">The source record uses different floor volumes in the normal and fire calculations and also contains conflicting total-area values. The professional report preserves the stated results and identifies those discrepancies for confirmation.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="case-section" id="diagnosis">
+      <div class="wrap section-grid">
+        <div class="section-kicker">04 <span>The diagnosis</span></div>
+        <div class="section-copy">
+          <h2>The fan count was not the governing design variable.</h2>
+          <p class="section-intro">B2 was closest to the principal mechanical influence and received the largest flow. B4 depended on shared shafts and indirect paths, yet had the longest modeled escape routes and the lowest renewal rate.</p>
+
+          <div class="next-grid">
+            <div class="next-item"><strong>Jet fans did their local job</strong><span>Velocity paths formed around the induction fans, so wholesale jet-fan replacement was not the first corrective action.</span></div>
+            <div class="next-item"><strong>Capacity accumulated upstairs</strong><span>B2 and B3 exceeded the stated targets by large margins while the lowest level remained deficient.</span></div>
+            <div class="next-item"><strong>Shared shafts hid the imbalance</strong><span>Adequate combined fan duty did not guarantee the minimum flow required on every connected floor.</span></div>
+            <div class="next-item"><strong>Control timing became part of safety</strong><span>The reported 180-second activation occurred after the source study's adverse evacuation allowance.</span></div>
+          </div>
+
+          <figure class="wide-figure">
+            <img src="../../assets/images/engineering/carpark/smoke-control-plans.webp" loading="lazy" alt="Smoke-control, extraction, and pressurization layouts for Levels B4, B3, and B2">
+            <figcaption>Smoke-control and pressurization arrangement · B4, B3, and B2</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="case-section" id="fire">
+      <div class="wrap section-grid">
+        <div class="section-kicker">05 <span>Fire scenarios</span></div>
+        <div class="section-copy">
+          <h2>A 4 MW fire turned air balance into evacuation time.</h2>
+          <p class="section-intro">Fire locations were selected near long escape paths and areas expected to challenge extraction. Each source represented a sprinklered-car-park vehicle fire over a 2 m by 5 m footprint.</p>
+
+          <div class="scenario-grid scenario-grid--three">
+            <article class="scenario">
+              <p class="eyebrow">Case 01</p>
+              <h3>One fire on B4</h3>
+              <p>A single 4 MW source tests a critical lower-level escape path.</p>
+            </article>
+            <article class="scenario">
+              <p class="eyebrow">Case 02</p>
+              <h3>Two fires on B4</h3>
+              <p>Two simultaneous 4 MW sources test the most severe lower-level case.</p>
+            </article>
+            <article class="scenario">
+              <p class="eyebrow">Case 03</p>
+              <h3>One fire on B2</h3>
+              <p>A single 4 MW source tests the level closest to the principal fire-fan influence.</p>
+            </article>
+          </div>
+
+          <figure class="wide-figure">
+            <img src="../../assets/images/engineering/carpark/fire-locations.webp" loading="lazy" alt="Plan drawings showing the selected vehicle-fire locations and escape paths on Levels B4 and B2">
+            <figcaption>Selected vehicle-fire locations and escape-path distances</figcaption>
+          </figure>
+
+          <div class="formula fire-summary">
+            <strong>4 MW</strong>
+            <span>Each modeled vehicle fire used a 0.153 kg/s fuel mass-flow rate. The source record states concentration limits of 50 ppm CO and 5,000 ppm CO₂ for its escape-path review.</span>
+          </div>
+
+          <div class="diagnosis-callout diagnosis-callout--warning">
+            <span>Time-history finding</span>
+            <strong>By 180 seconds, the reported limits were exceeded in every case.</strong>
+            <p>The activated controls did not recover the modeled environment. The source narrative says two cases were acceptable at 90 seconds and the remaining case was near the boundary, but its floor labels conflict with the listed scenarios; that ambiguity is retained rather than guessed away.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="case-section" id="recommendations">
+      <div class="wrap section-grid">
+        <div class="section-kicker">06 <span>Design response</span></div>
+        <div class="section-copy">
+          <h2>Redesign distribution before adding more machinery.</h2>
+          <p class="section-intro">Because B2 and B3 already had substantial excess capacity, the first response is to control where the air goes, how smoke is collected, and when the system changes mode.</p>
+
+          <div class="next-grid">
+            <div class="next-item"><strong>Give each floor active control</strong><span>Provide independently driven supply and extract duty on each basement level.</span></div>
+            <div class="next-item"><strong>Place extract where smoke travels</strong><span>Use the predicted smoke path and fire locations to position effective collection points.</span></div>
+            <div class="next-item"><strong>Protect the escape direction</strong><span>Introduce replacement air toward protected routes while drawing smoke away from them.</span></div>
+            <div class="next-item"><strong>Rebalance existing capacity</strong><span>Reduce unnecessary excess on B2 and B3 before assuming that the project simply needs more fans.</span></div>
+            <div class="next-item"><strong>Review the control sequence</strong><span>Coordinate detection, confirmation, pre-movement, and fan activation with the available safe egress time.</span></div>
+            <div class="next-item"><strong>Commission floor by floor</strong><span>Measure flow, pressure, and occupied-height velocity on every level and compare them with the CFD boundaries.</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="case-section" id="next">
+      <div class="wrap section-grid">
+        <div class="section-kicker">07 <span>What comes next</span></div>
+        <div class="section-copy">
+          <h2>The model found the design question. A validation phase would close it.</h2>
+          <p class="section-intro">A professional design-stage update would test whether the diagnosis survives numerical, operational, and fire-safety uncertainty.</p>
+
+          <div class="next-grid">
+            <div class="next-item"><strong>Mesh sensitivity</strong><span>Demonstrate that floor balance and occupied-height conditions are independent of practical mesh refinement.</span></div>
+            <div class="next-item"><strong>Convergence and time history</strong><span>Document residuals, monitor points, mass balance, and condition histories instead of relying on selected contour frames.</span></div>
+            <div class="next-item"><strong>Real leakage paths</strong><span>Represent doors, ramps, shafts, lobbies, and pressure relationships in their credible operating states.</span></div>
+            <div class="next-item"><strong>System failures</strong><span>Test loss of a fan, blocked extract, delayed activation, and alternative fire locations.</span></div>
+            <div class="next-item"><strong>Fire protection interfaces</strong><span>Coordinate sprinklers, detection, pressurization, firefighter access, and credible heat-release histories.</span></div>
+            <div class="next-item"><strong>Tenability evidence</strong><span>Report temperature, visibility, toxicity, and fractional effective dose along time-dependent evacuation routes.</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="case-section" aria-labelledby="report-title">
+      <div class="wrap download-panel">
+        <div>
+          <p class="eyebrow">Professional project report</p>
+          <h2 id="report-title">The complete engineering record.</h2>
+          <p>The original 2021 analysis has been rewritten as a focused 18-page report with the model setup, calculations, results, design diagnosis, recommendations, and source-data reconciliation.</p>
+        </div>
+        <a class="button" href="../../assets/reports/cfd-assessment-underground-car-park-ventilation-smoke-control.pdf">Download PDF · 2.5 MB</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap footer-inner">
+      <span>© 2026 Bora Guzel</span>
+      <a href="../../#projects">← Back to Engineering</a>
+    </div>
+  </footer>
+</body>
+</html>
