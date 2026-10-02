@@ -411,6 +411,11 @@ p{ margin:0; }
   border-color:#2a3842;
 }
 .cfd-frame::before{ content:"CFD 01"; }
+.wind-frame{
+  background:#0b0b0a;
+  border-color:#3a3328;
+}
+.wind-frame::before{ content:"WIND 03"; }
 .wide-figure{
   margin-top:3rem;
   padding:clamp(.75rem,2vw,1.2rem);
@@ -440,6 +445,11 @@ p{ margin:0; }
   border:1px solid var(--line);
 }
 .result-panel .eyebrow{ font-size:.65rem; }
+.result-panel h3{
+  margin-top:.7rem;
+  font-size:clamp(2rem,4vw,3rem);
+  font-weight:400;
+}
 .result-table{
   width:100%;
   margin-top:1.2rem;

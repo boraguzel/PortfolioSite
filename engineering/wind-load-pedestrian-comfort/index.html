@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="A CFD engineering case study by Bora Guzel connecting directional wind climate, facade pressure, and pedestrian comfort across an anonymized urban development.">
+  <title>Wind Load &amp; Pedestrian Comfort | Bora Guzel</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+  <link rel="stylesheet" href="../../assets/css/engineering.css">
+</head>
+<body>
+  <nav class="site-nav" aria-label="Site navigation">
+    <div class="wrap nav-inner">
+      <a class="brand" href="../../"><img src="../../assets/images/image-01-3e7a210499.png" alt=""><span>Bora Guzel</span></a>
+      <a class="nav-back" href="../../#projects">← Engineering archive</a>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <p class="eyebrow">Engineering case study · 2022</p>
+        <h1>Wind Load &amp; <em>Pedestrian Comfort</em></h1>
+        <p class="hero-lead">Eight directional wind cases turned one urban CFD model into two design outputs: a facade pressure envelope and an annual comfort-risk map.</p>
+        <div class="hero-meta">
+          <span><strong>Role</strong>: CFD analysis &amp; technical reporting</span>
+          <span><strong>Tools</strong>: ANSYS CFD · CAD</span>
+          <span><strong>Project</strong>: Anonymized mixed-use development</span>
+        </div>
+        <p class="scope-note">The original project and approval identities have been removed. The 2022 simulations were not rerun for this portfolio edition; current standards and design assumptions require confirmation before construction use.</p>
+      </div>
+
+      <figure class="track-frame wind-frame">
+        <img src="../../assets/images/engineering/wind/hero.webp" alt="Three-dimensional CFD overview of an anonymized multi-building development with wind pressure contours">
+        <figcaption>Urban CFD model · eight directional wind cases</figcaption>
+      </figure>
+    </div>
+  </header>
+
+  <main>
+    <div class="wrap stats" aria-label="Project summary">
+      <div class="stat"><strong>8</strong><span>Wind directions</span></div>
+      <div class="stat"><strong>40M</strong><span>Mesh cells</span></div>
+      <div class="stat"><strong>17</strong><span>Comfort zones</span></div>
+      <div class="stat"><strong>5</strong><span>Evaluation heights</span></div>
+      <div class="stat"><strong>−1.40</strong><span>Minimum kPa</span></div>
+      <div class="stat"><strong>181</strong><span>Equivalent days</span></div>
+    </div>
+
+    <section class="case-section" id="brief">
+      <div class="wrap section-grid">
+        <div class="section-kicker">01 <span>The brief</span></div>
+        <div class="section-copy">
+          <h2>One model had to answer two different wind questions.</h2>
+          <p class="section-intro">The facade needed an extreme pressure envelope for building-envelope development. People at entrances, passages, vehicle routes, and terraces needed a probability-based picture of everyday exposure.</p>
+
+          <div class="brief-grid">
+            <article class="brief-card">
+              <h3>Structural question</h3>
+              <p>Which positive pressure and suction should govern each facade zone after all eight wind directions are considered?</p>
+            </article>
+            <article class="brief-card">
+              <h3>Human question</h3>
+              <p>Where does the urban form accelerate wind often enough to create recurring discomfort?</p>
+            </article>
+            <article class="brief-card">
+              <h3>Model scope</h3>
+              <p>The complete development, surrounding buildings, an extended flow domain, and occupied zones at five elevations.</p>
+            </article>
+            <article class="brief-card">
+              <h3>My role</h3>
+              <p>Prepare the geometry and CFD model, establish the directional inputs, interpret pressure and velocity fields, and document the design response.</p>
+            </article>
+          </div>
+
+          <figure class="wide-figure">
+            <img src="../../assets/images/engineering/wind/cad-model.webp" loading="lazy" alt="Three views showing the surrounding urban context, full development geometry, and detailed building model">
+            <figcaption>From urban context to CFD-ready development geometry</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="case-section" id="path">
+      <div class="wrap section-grid">
+        <div class="section-kicker">02 <span>Decision path</span></div>
+        <div class="section-copy">
+          <h2>The useful result came from a chain of decisions, not one contour.</h2>
+          <p class="section-intro">Climate, geometry, numerical resolution, and exposure were kept connected so each output could be traced back to a documented assumption.</p>
+
+          <ol class="decision-path">
+            <li>
+              <div>
+                <h3>Represent the urban context</h3>
+                <p class="decision-question">What changes the wind before it reaches the site?</p>
+                <p class="decision-text">Nearby buildings were retained where they could shield the development, accelerate flow through passages, or alter the wake.</p>
+                <p class="decision-output">Output · One mesh-ready model for the project and its relevant surroundings.</p>
+              </div>
+            </li>
+            <li>
+              <div>
+                <h3>Separate the climate by direction</h3>
+                <p class="decision-question">Is one wind speed enough?</p>
+                <p class="decision-text">No. Wind frequency and power information were used to derive a mean speed for north, northeast, east, southeast, south, southwest, west, and northwest.</p>
+                <p class="decision-output">Output · Eight climate conditions instead of one generic site input.</p>
+              </div>
+            </li>
+            <li>
+              <div>
+                <h3>Create the extreme design cases</h3>
+                <p class="decision-question">How should rare wind events enter the model?</p>
+                <p class="decision-text">A Rayleigh method converted each directional climate into a documented 50-year design speed. Applied values ranged from 20.00 to 28.10 m/s at 10 m.</p>
+                <p class="decision-output">Output · A direction-specific extreme input for every compass case.</p>
+              </div>
+            </li>
+            <li>
+              <div>
+                <h3>Resolve the places where gradients matter</h3>
+                <p class="decision-question">Where can the mesh change the answer?</p>
+                <p class="decision-text">Approximately 40 million tetrahedral cells were concentrated near facades, edges, the ground, and occupied zones, with a coarser outer domain.</p>
+                <p class="decision-output">Output · Practical domain size with local resolution around design-critical geometry.</p>
+              </div>
+            </li>
+            <li>
+              <div>
+                <h3>Envelope facade pressure</h3>
+                <p class="decision-question">Which direction governs each surface?</p>
+                <p class="decision-text">The highest positive pressure and most severe suction were selected independently at every facade zone across all eight simulations.</p>
+                <p class="decision-output">Output · A zone-by-zone pressure schedule from −1.40 to +0.90 kPa.</p>
+              </div>
+            </li>
+            <li>
+              <div>
+                <h3>Convert velocity into annual exposure</h3>
+                <p class="decision-question">How often does local acceleration matter?</p>
+                <p class="decision-text">Local mean velocity in each comfort zone was combined with directional wind frequency and the source study's 6 m/s discomfort threshold.</p>
+                <p class="decision-output">Output · Equivalent uncomfortable days per year for 17 zones on five horizontal planes.</p>
+              </div>
+            </li>
+            <li>
+              <div>
+                <h3>Prioritize by consequence</h3>
+                <p class="decision-question">Where should design effort go first?</p>
+                <p class="decision-text">The exposed JKLMN entrance and the repeated ground-level corridors ranked above naturally protected upper terraces.</p>
+                <p class="decision-output">Output · A mitigation sequence tied to entrances, circulation, and occupied edges.</p>
+              </div>
+            </li>
+          </ol>
+
+          <figure class="wide-figure">
+            <img src="../../assets/images/engineering/wind/directional-wind-speeds.webp" loading="lazy" alt="Bar chart comparing mean and applied 50-year design wind speeds for eight compass directions">
+            <figcaption>Directional mean and applied 50-year design wind speeds at 10 m</figcaption>
+          </figure>
+
+          <figure class="wide-figure wide-figure--dark">
+            <img src="../../assets/images/engineering/wind/mesh-strategy.webp" loading="lazy" alt="Four views of the complete CFD domain and local mesh refinement around the buildings and ground plane">
+            <figcaption>Extended domain with local refinement around facades, edges, and occupied elevations</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="case-section" id="pressure">
+      <div class="wrap section-grid">
+        <div class="section-kicker">03 <span>Facade pressure</span></div>
+        <div class="section-copy">
+          <h2>The governing direction changed from zone to zone.</h2>
+          <p class="section-intro">A single windward-versus-leeward diagram would have hidden the real load pattern. Corners, roof edges, returns, and recesses moved the controlling case around the development.</p>
+
+          <div class="result-grid">
+            <article class="result-panel">
+              <p class="eyebrow">Governing suction</p>
+              <h3>−1.40 kPa</h3>
+              <p class="source-note">Block A · zone GD1</p>
+            </article>
+            <article class="result-panel">
+              <p class="eyebrow">Governing positive pressure</p>
+              <h3>+0.90 kPa</h3>
+              <p class="source-note">Block C · zone GB4</p>
+            </article>
+          </div>
+
+          <figure class="wide-figure">
+            <img src="../../assets/images/engineering/wind/pressure-by-building.webp" loading="lazy" alt="Range chart showing minimum suction and maximum positive facade pressure for Blocks A through N">
+            <figcaption>Tabulated facade-zone pressure envelope by building</figcaption>
+          </figure>
+
+          <figure class="wide-figure wide-figure--dark">
+            <img src="../../assets/images/engineering/wind/pressure-envelope.webp" loading="lazy" alt="Four CFD contour views showing maximum and minimum pressure on the east and west sides of Block A">
+            <figcaption>Selected positive-pressure and suction contours · Block A</figcaption>
+          </figure>
+
+          <div class="diagnosis-callout">
+            <span>Engineering meaning</span>
+            <strong>The envelope needs both signs of pressure and the zone that each value belongs to.</strong>
+            <p>The scheduled values are useful for facade development only when they remain connected to current elevations, tributary areas, internal-pressure assumptions, load combinations, and the governing code edition.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="case-section" id="comfort">
+      <div class="wrap section-grid">
+        <div class="section-kicker">04 <span>Human exposure</span></div>
+        <div class="section-copy">
+          <h2>The entrance carried almost seven times the exposure of the best terraces.</h2>
+          <p class="section-intro">The same development produced sharply different outcomes. Ground-level entrances and passages concentrated flow, while upper terraces benefited from shielding and local geometry.</p>
+
+          <figure class="wide-figure">
+            <img src="../../assets/images/engineering/wind/comfort-days.webp" loading="lazy" alt="Horizontal bar chart ranking 17 occupied zones by equivalent uncomfortable days per year">
+            <figcaption>Annual discomfort risk by occupied zone</figcaption>
+          </figure>
+
+          <div class="result-grid">
+            <article class="result-panel">
+              <p class="eyebrow">Highest exposure</p>
+              <table class="result-table">
+                <thead><tr><th>Zone</th><th>Days/year</th></tr></thead>
+                <tbody>
+                  <tr><td>JKLMN ground entrance</td><td>181</td></tr>
+                  <tr><td>Passage between A–B</td><td>121</td></tr>
+                  <tr><td>JKLMN Level 2 routes</td><td>118</td></tr>
+                </tbody>
+              </table>
+            </article>
+            <article class="result-panel">
+              <p class="eyebrow">Lowest exposure</p>
+              <table class="result-table">
+                <thead><tr><th>Zone</th><th>Days/year</th></tr></thead>
+                <tbody>
+                  <tr><td>Terrace between A–B</td><td>27</td></tr>
+                  <tr><td>Terrace between B–C</td><td>27</td></tr>
+                  <tr><td>Terraces between C–E</td><td>33</td></tr>
+                </tbody>
+              </table>
+            </article>
+          </div>
+
+          <figure class="wide-figure">
+            <img src="../../assets/images/engineering/wind/comfort-zones.webp" loading="lazy" alt="Plans showing 17 pedestrian comfort zones evaluated at five heights across the development">
+            <figcaption>Seventeen occupied zones evaluated at 1.0, 7.0, 13.5, 19.5, and 25.5 m</figcaption>
+          </figure>
+
+          <div class="drawing-grid">
+            <figure class="drawing">
+              <img src="../../assets/images/engineering/wind/velocity-ne.webp" loading="lazy" alt="Northeast-wind CFD velocity fields at five elevations">
+              <figcaption>Northeast wind · most frequent direction</figcaption>
+            </figure>
+            <figure class="drawing">
+              <img src="../../assets/images/engineering/wind/velocity-sw.webp" loading="lazy" alt="Southwest-wind CFD velocity fields at five elevations">
+              <figcaption>Southwest wind · strongest mean and design input</figcaption>
+            </figure>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="case-section" id="response">
+      <div class="wrap section-grid">
+        <div class="section-kicker">05 <span>Design response</span></div>
+        <div class="section-copy">
+          <h2>Interrupt the wind corridors without creating a new one.</h2>
+          <p class="section-intro">The source study pointed to porous, staggered, and planted interventions rather than one solid barrier. The goal is to reduce local acceleration while preserving access, visibility, and useful shielding.</p>
+
+          <div class="next-grid">
+            <div class="next-item"><strong>Start at the JKLMN entrance</strong><span>It combines the highest annual exposure with pedestrian and vehicle movement.</span></div>
+            <div class="next-item"><strong>Break up the A–E corridors</strong><span>Use porous screens, planted barriers, staggered walls, or a coordinated combination.</span></div>
+            <div class="next-item"><strong>Test southwest first</strong><span>It governs several local peaks, including 10–11 m/s in the highest-risk zones.</span></div>
+            <div class="next-item"><strong>Protect occupied terrace edges</strong><span>Add perimeter measures where a more demanding comfort target is required.</span></div>
+            <div class="next-item"><strong>Keep useful shielding</strong><span>Do not remove geometry that already protects the lowest-exposure upper terraces.</span></div>
+            <div class="next-item"><strong>Rerun every direction</strong><span>A local fix must not transfer acceleration to the next entrance, terrace, or facade corner.</span></div>
+          </div>
+
+          <div class="diagnosis-callout">
+            <span>Governing insight</span>
+            <strong>The ranking mattered more than the picture.</strong>
+            <p>Once local velocity was combined with wind frequency, the model became a design-priority map: entrance first, circulation corridors next, protected terraces last.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="case-section" id="next">
+      <div class="wrap section-grid">
+        <div class="section-kicker">06 <span>What comes next</span></div>
+        <div class="section-copy">
+          <h2>The study found the priorities. A validated update would close the design loop.</h2>
+          <p class="section-intro">The portfolio edition preserves the original calculations and makes their limits explicit. A current design-stage study should now test sensitivity, compliance, and the proposed mitigation.</p>
+
+          <div class="next-grid">
+            <div class="next-item"><strong>Mesh independence</strong><span>Show that facade pressures and comfort rankings remain stable under practical refinement.</span></div>
+            <div class="next-item"><strong>Convergence evidence</strong><span>Document residuals, monitor points, mass balance, and steady-state stability.</span></div>
+            <div class="next-item"><strong>Physical validation</strong><span>Compare the CFD model with wind-tunnel data, site measurements, or an accepted benchmark.</span></div>
+            <div class="next-item"><strong>Current comfort standard</strong><span>Distinguish sitting, standing, strolling, entrances, and gust-sensitive safety criteria.</span></div>
+            <div class="next-item"><strong>Current facade basis</strong><span>Confirm code edition, load combinations, internal pressure, tributary areas, and cladding zones.</span></div>
+            <div class="next-item"><strong>Mitigation verification</strong><span>Model the shortlisted windbreak concepts under all eight directions before selection.</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="case-section" aria-labelledby="report-title">
+      <div class="wrap download-panel">
+        <div>
+          <p class="eyebrow">Professional English report</p>
+          <h2 id="report-title">The complete engineering record.</h2>
+          <p>The anonymized 2022 study has been rewritten as a focused 20-page report with the wind-climate method, CFD setup, facade schedule, comfort calculations, decision path, recommendations, and limitations.</p>
+        </div>
+        <a class="button" href="../../assets/reports/wind-load-pedestrian-comfort-assessment.pdf">Download PDF · 4.1 MB</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap footer-inner">
+      <span>© 2026 Bora Guzel</span>
+      <a href="../../#projects">← Back to Engineering</a>
+    </div>
+  </footer>
+</body>
+</html>
